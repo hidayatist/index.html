@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kotak Misteri Kode Acak</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f172a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .hint-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .secret-display {
+      color: #ffd700;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    /* Container 3D Kotak */
+    .scene {
+      width: 200px;
+      height: 200px;
+      perspective: 800px;
+      margin-bottom: 40px;
+    }
+
+    .box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-20deg) rotateY(-30deg);
+      transition: transform 1s ease;
+    }
+
+    /* Sisi-sisi Kotak */
+    .face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #b8860b, #ffd700);
+      border: 3px solid #8b6508;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #5c4002;
+    }
+
+    .front  { transform: translateZ(100px); }
+    .back   { transform: rotateY(180deg) translateZ(100px); }
+    .right  { transform: rotateY(90deg) translateZ(100px); }
+    .left   { transform: rotateY(-90deg) translateZ(100px); }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); background: #8b6508; }
+
+    /* Tutup Kotak */
+    .top {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ffd700, #ffec8b);
+      border: 3px solid #8b6508;
+      transform-origin: back;
+      transform: rotateX(90deg) translateZ(100px);
+      transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Animasi Terbuka */
+    .box.open .top {
+      transform: rotateX(90deg) translateZ(100px) rotateX(110deg);
+    }
+
+    /* Efek Hadiah Cahaya */
+    .treasure {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 50px;
+      left: 50px;
+      background: radial-gradient(circle, #ffffff, #ff007f);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translateZ(0) scale(0.2);
+      transition: all 1.5s ease 0.5s;
+      box-shadow: 0 0 50px #ff007f, 0 0 100px #ff007f;
+    }
+
+    .box.open .treasure {
+      opacity: 1;
+      transform: translateZ(50px) translateY(-80px) scale(1);
+    }
+
+    /* Controls & Form Input */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input {
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border: 2px solid #ffd700;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #fff;
+      text-align: center;
+      outline: none;
+      letter-spacing: 2px;
+    }
+
+    input:focus {
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #0f172a;
+      background: #ffd700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
+
+    button.reset-btn {
+      background: #94a3b8;
+      color: #0f172a;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 1rem;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔒 Kotak Misteri Rahasia</h1>
+  <div class="hint-box">
+    Kode Rahasia (Acak): <span class="secret-display" id="secretDisplay">????</span>
+  </div>
+
+  <div class="scene">
+    <div class="box" id="mysteryBox">
+      <div class="face front">?</div>
+      <div class="face back">?</div>
+      <div class="face right">?</div>
+      <div class="face left">?</div>
+      <div class="face bottom"></div>
+      <div class="top"></div>
+      <div class="treasure"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="codeInput" placeholder="Masukkan 4 Angka" maxlength="4">
+    <div class="btn-group">
+      <button onclick="checkCode()">Buka Kotak</button>
+      <button class="reset-btn" onclick="generateNewCode()">Acak Kode Baru</button>
+    </div>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let secretCode = "";
+
+    // Fungsi membuat 4 digit angka acak (1000 - 9999)
+    function generateNewCode() {
+      secretCode = Math.floor(1000 + Math.random() * 9000).toString();
+      document.getElementById("secretDisplay").textContent = secretCode;
+      
+      const box = document.getElementById("mysteryBox");
+      const message = document.getElementById("message");
+      const input = document.getElementById("codeInput");
+      
+      box.classList.remove("open");
+      input.value = "";
+      message.textContent = "";
+    }
+
+    function checkCode() {
+      const input = document.getElementById("codeInput").value;
+      const box = document.getElementById("mysteryBox");
+      const message = document.getElementById("message");
+
+      if (input === secretCode) {
+        box.classList.add("open");
+        message.style.color = "#4ade80";
+        message.textContent = "🎉 Selamat! Kode Benar. Kotak Terbuka!";
+      } else {
+        message.style.color = "#f87171";
+        message.textContent = "❌ Kode Salah! Coba lagi.";
+        
+        // Efek getar saat salah
+        box.style.transform = "rotateX(-20deg) rotateY(-20deg)";
+        setTimeout(() => {
+          box.style.transform = "rotateX(-20deg) rotateY(-40deg)";
+        }, 100);
+        setTimeout(() => {
+          box.style.transform = "rotateX(-20deg) rotateY(-30deg)";
+        }, 200);
+      }
+    }
+
+    // Jalankan pembuat kode saat halaman dibuka
+    generateNewCode();
+  </script>
+</body>
+</html>
