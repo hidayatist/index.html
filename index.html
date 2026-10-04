@@ -129,6 +129,14 @@
             border-color: #0284c7 !important;
         }
 
+        /* Lock Overlay & Step Styles */
+        .step-card-disabled {
+            opacity: 0.55;
+            pointer-events: none;
+            filter: grayscale(80%);
+            position: relative;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -256,59 +264,97 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span id="caseBadge" class="bg-emerald-100 text-emerald-700 font-black text-xs px-3 py-1 rounded-full font-fredoka uppercase">CASE 1</span>
-                                <span id="caseCategory" class="bg-cyan-100 text-cyan-700 font-bold text-xs px-3 py-1 rounded-full font-fredoka">Misi Pemahaman Kasus</span>
+                                <span id="caseCategory" class="bg-cyan-100 text-cyan-700 font-bold text-xs px-3 py-1 rounded-full font-fredoka">Problem Solving</span>
                             </div>
                             <h2 id="caseTitle" class="text-2xl md:text-3xl font-black font-fredoka text-slate-800 mt-1">Judul Misi Soal</h2>
                         </div>
                         <div class="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-200">
                             <i class="fa-solid fa-award text-amber-500 text-xl"></i>
-                            <span class="text-xs font-bold text-amber-800">Selesaikan 5 Langkah Alur Polya</span>
+                            <span class="text-xs font-bold text-amber-800">Selesaikan 5 Tahap Pembelajaran Polya</span>
                         </div>
                     </div>
 
                     <!-- Story Container -->
-                    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-5 mb-8 shadow-inner relative">
+                    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-5 mb-6 shadow-inner relative">
                         <div class="absolute -top-3 left-4 bg-emerald-600 text-white font-black text-[10px] uppercase px-3 py-0.5 rounded-full font-fredoka">📖 Cerita Misi Hari Ini</div>
                         <p id="storyContent" class="text-slate-700 font-medium leading-relaxed text-base md:text-lg">Loading story content...</p>
                     </div>
 
-                    <!-- Stepper Container (ALUR REVISI BARU UNTUK 7 KASUS) -->
-                    <div class="space-y-6">
-                        <!-- LANGKAH 1: MEMAHAMI INFORMASI SOAL -->
-                        <div class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:border-emerald-400 transition-colors">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-xl bg-emerald-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">1</span>
-                                <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 1: Memahami Informasi Soal</h3>
+                    <!-- VISUAL STEPPER ALUR (ALUR MISI) -->
+                    <div class="bg-slate-800/90 rounded-2xl p-4 mb-8 border border-slate-700 shadow-md">
+                        <div class="text-[11px] font-bold text-amber-400 uppercase tracking-widest text-center mb-3 font-fredoka">
+                            <i class="fa-solid fa-route"></i> Alur Pengerjaan Misi (Tahap Polya & Discovery Learning)
+                        </div>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold font-fredoka">
+                            <div id="stepIndicator-1" class="p-2 rounded-xl bg-emerald-500 text-white shadow-md transition-all flex flex-col items-center justify-center gap-1">
+                                <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">1</span>
+                                <span class="text-[10px] hidden sm:inline">Memahami Informasi</span>
                             </div>
-                            <p class="text-xs text-slate-500 mb-4">Centang semua informasi penting dan relevan yang terdapat dalam soal cerita di atas:</p>
+                            <div id="stepIndicator-2" class="p-2 rounded-xl bg-slate-700 text-slate-400 transition-all flex flex-col items-center justify-center gap-1">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-xs">2</span>
+                                <span class="text-[10px] hidden sm:inline">Memahami Situasi</span>
+                            </div>
+                            <div id="stepIndicator-3" class="p-2 rounded-xl bg-slate-700 text-slate-400 transition-all flex flex-col items-center justify-center gap-1">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-xs">3</span>
+                                <span class="text-[10px] hidden sm:inline">Pilih Strategi</span>
+                            </div>
+                            <div id="stepIndicator-4" class="p-2 rounded-xl bg-slate-700 text-slate-400 transition-all flex flex-col items-center justify-center gap-1">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-xs">4</span>
+                                <span class="text-[10px] hidden sm:inline">Hitung & Analisis</span>
+                            </div>
+                            <div id="stepIndicator-5" class="p-2 rounded-xl bg-slate-700 text-slate-400 transition-all flex flex-col items-center justify-center gap-1">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-xs">5</span>
+                                <span class="text-[10px] hidden sm:inline">Kesimpulan & Arti</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stepper Container -->
+                    <div class="space-y-6">
+                        <!-- Langkah 1 -->
+                        <div id="stepContainer-1" class="border-2 border-emerald-400 rounded-2xl p-5 bg-white shadow-sm transition-all relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-xl bg-emerald-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">1</span>
+                                    <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 1: Memahami Informasi Soal</h3>
+                                </div>
+                                <span id="stepBadge-1" class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-800">Sedang Dikerjakan</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Centang semua informasi penting dan fakta relevan yang terdapat dalam cerita di atas:</p>
                             <div id="readStatements" class="space-y-2 mb-4"></div>
-                            <button onclick="checkReadAnswer()" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
+                            <button onclick="checkReadAnswer()" id="btnStep-1" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
                                 <i class="fa-solid fa-magnifying-glass"></i> Periksa Informasi Soal
                             </button>
                             <div id="readFeedback" class="mt-3 text-xs font-bold"></div>
                         </div>
 
-                        <!-- LANGKAH 2: MEMAHAMI SITUASI MASALAH -->
-                        <div class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:border-emerald-400 transition-colors">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-xl bg-cyan-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">2</span>
-                                <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 2: Memahami Situasi Masalah</h3>
+                        <!-- Langkah 2 -->
+                        <div id="stepContainer-2" class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm transition-all step-card-disabled">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-xl bg-cyan-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">2</span>
+                                    <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 2: Memahami Situasi Masalah</h3>
+                                </div>
+                                <span id="stepBadge-2" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500"><i class="fa-solid fa-lock"></i> Terkunci</span>
                             </div>
-                            <p class="text-xs text-slate-500 mb-3">Apa yang sebenarnya sedang terjadi dan dicari dalam masalah ini?</p>
+                            <p id="situationPrompt" class="text-xs text-slate-500 mb-3">Apa yang sebenarnya sedang terjadi dan dicari dalam situasi masalah ini?</p>
                             <div id="situationOptions" class="space-y-2 mb-4"></div>
-                            <button onclick="checkSituationAnswer()" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
+                            <button onclick="checkSituationAnswer()" id="btnStep-2" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
                                 <i class="fa-solid fa-brain"></i> Periksa Situasi Masalah
                             </button>
                             <div id="situationFeedback" class="mt-3 text-xs font-bold"></div>
                         </div>
 
-                        <!-- LANGKAH 3: MENENTUKAN STRATEGI PENYELESAIAN -->
-                        <div class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:border-emerald-400 transition-colors">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-xl bg-amber-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">3</span>
-                                <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 3: Menentukan Strategi Penyelesaian</h3>
+                        <!-- Langkah 3 -->
+                        <div id="stepContainer-3" class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm transition-all step-card-disabled">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-xl bg-amber-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">3</span>
+                                    <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 3: Menentukan Strategi Penyelesaian</h3>
+                                </div>
+                                <span id="stepBadge-3" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500"><i class="fa-solid fa-lock"></i> Terkunci</span>
                             </div>
-                            <p class="text-xs text-slate-500 mb-3">Berdasarkan situasi masalah di atas, strategi matematika apa yang paling tepat?</p>
+                            <p class="text-xs text-slate-500 mb-3">Berdasarkan situasi masalah di Langkah 2, strategi matematika apa yang paling tepat?</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                                 <label class="p-3 border-2 border-slate-200 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors">
                                     <input type="radio" name="strategyOption" value="kpk" class="w-5 h-5 text-emerald-600 focus:ring-emerald-500">
@@ -319,45 +365,65 @@
                                     <span class="text-xs font-bold text-slate-700">Mencari Faktor Persekutuan Terbesar (FPB)</span>
                                 </label>
                             </div>
-                            <button onclick="checkStrategyAnswer()" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
-                                <i class="fa-solid fa-compass"></i> Periksa Pilihan Strategi
+                            <button onclick="checkStrategyAnswer()" id="btnStep-3" class="btn-game-primary text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
+                                <i class="fa-solid fa-compass"></i> Periksa Strategi
                             </button>
                             <div id="strategyFeedback" class="mt-3 text-xs font-bold"></div>
                         </div>
 
-                        <!-- LANGKAH 4: ANALISIS DAN PERHITUNGAN -->
-                        <div class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:border-emerald-400 transition-colors">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-xl bg-purple-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">4</span>
-                                <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 4: Analisis dan Perhitungan</h3>
+                        <!-- Langkah 4 -->
+                        <div id="stepContainer-4" class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm transition-all step-card-disabled">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-xl bg-purple-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">4</span>
+                                    <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 4: Analisis Kelipatan/Faktor dan Perhitungan</h3>
+                                </div>
+                                <span id="stepBadge-4" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500"><i class="fa-solid fa-lock"></i> Terkunci</span>
                             </div>
-                            <p id="factorStepPrompt" class="text-xs text-slate-500 mb-3">Mari buktikan strategi yang kamu pilih dengan menganalisis angka:</p>
+                            <p id="factorStepPrompt" class="text-xs text-slate-500 mb-3">Pilih deret angka / faktor yang benar untuk membuktikan strategi pilihanmu:</p>
                             <div id="factorStatements" class="space-y-2 mb-4"></div>
-                            
-                            <div class="flex flex-col sm:flex-row items-center gap-3 mb-4 pt-2 border-t border-slate-100">
-                                <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Hasil Perhitungan Akhir =</label>
-                                <input type="number" id="calcInput" placeholder="Ketik hasil perhitungan angka..." class="w-full sm:w-60 px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none font-bold text-slate-700">
+                            <div class="flex flex-col sm:flex-row items-center gap-3 mb-4 p-3 bg-purple-50 border border-purple-200 rounded-xl">
+                                <label id="calcInputLabel" class="text-xs font-bold text-slate-700 whitespace-nowrap">Nilai Akhir Hasil Perhitungan =</label>
+                                <input type="number" id="calcInput" placeholder="Ketik angka hasil hitungan..." class="w-full sm:w-60 px-4 py-2 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none font-bold text-slate-700">
                             </div>
-                            <button onclick="checkFactorAndCalcAnswer()" class="btn-game-purple text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
-                                <i class="fa-solid fa-calculator"></i> Periksa Pembuktian & Perhitungan
+                            <button onclick="checkFactorAndCalcAnswer()" id="btnStep-4" class="btn-game-purple text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
+                                <i class="fa-solid fa-calculator"></i> Periksa Analisis & Hitungan
                             </button>
-                            <div id="calcFeedback" class="mt-3 text-xs font-bold"></div>
+                            <div id="factorFeedback" class="mt-3 text-xs font-bold"></div>
                         </div>
 
-                        <!-- LANGKAH 5: KESIMPULAN DAN INTERPRETASI -->
-                        <div class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:border-emerald-400 transition-colors">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-xl bg-rose-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">5</span>
-                                <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 5: Kesimpulan dan Interpretasi</h3>
+                        <!-- Langkah 5 -->
+                        <div id="stepContainer-5" class="border-2 border-slate-200 rounded-2xl p-5 bg-white shadow-sm transition-all step-card-disabled">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-xl bg-rose-500 text-white font-black font-fredoka flex items-center justify-center text-sm shadow">5</span>
+                                    <h3 class="font-black font-fredoka text-slate-800 text-lg">Langkah 5: Kesimpulan dan Interpretasi Hasil</h3>
+                                </div>
+                                <span id="stepBadge-5" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500"><i class="fa-solid fa-lock"></i> Terkunci</span>
                             </div>
-                            <p class="text-xs text-slate-500 mb-3">Apa makna angka hasil perhitungan tersebut dalam konteks cerita nyata?</p>
+                            <p class="text-xs text-slate-500 mb-3">Apa makna nyata dari nilai hasil perhitunganmu di atas dalam cerita soal ini?</p>
                             <div id="conclusionOptions" class="space-y-2 mb-4"></div>
-                            <button onclick="checkConclusionAnswer()" class="btn-game-yellow text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
+                            <button onclick="checkConclusionAnswer()" id="btnStep-5" class="btn-game-yellow text-white font-bold px-5 py-2.5 rounded-xl text-sm font-fredoka flex items-center gap-2">
                                 <i class="fa-solid fa-flag-checkered"></i> Selesaikan Misi Case Ini!
                             </button>
                             <div id="conclusionFeedback" class="mt-3 text-xs font-bold"></div>
                         </div>
                     </div>
+
+                    <!-- BANNER KELANJUTAN MISI (Misi Selesai) -->
+                    <div id="missionCompleteBanner" class="hidden mt-8 bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6 rounded-2xl shadow-xl text-center space-y-3 border-2 border-emerald-300">
+                        <div class="text-4xl animate-bounce">🎉</div>
+                        <h3 class="text-2xl font-black font-fredoka">SELAMAT! MISI CASE DISLESAIKAN!</h3>
+                        <p class="text-xs md:text-sm font-medium text-emerald-100 max-w-xl mx-auto">
+                            Kamu telah berhasil melewati seluruh alur 5 Langkah Misi Polya dengan sempurna dan meraih <span class="font-bold text-amber-300">100 Bintang Solo</span>!
+                        </p>
+                        <div class="pt-2 flex justify-center gap-3">
+                            <button onclick="nextCaseMission()" id="btnNextCase" class="btn-game-yellow text-white font-black px-6 py-3 rounded-xl font-fredoka text-sm uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-circle-arrow-right"></i> Lanjut Ke Case Berikutnya
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -396,7 +462,7 @@
                             <i class="fa-solid fa-sitemap"></i> 2. Pohon Faktor
                         </button>
                         <button onclick="selectLabMethod('tabel')" id="labMethodBtn-tabel" class="lab-method-btn px-4 py-2.5 rounded-xl font-bold font-fredoka text-xs text-slate-600 bg-slate-100 hover:bg-slate-200 border-2 border-slate-300 transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-table-cells"></i> 3. Tabel Sengkedan
+                            <i class="fa-solid fa-table-cells"></i> 3. Tabel Faktorisasi / Sengkedan
                         </button>
                     </div>
 
@@ -543,7 +609,7 @@
                                 🏆 LIVE SCOREBOARD ALL-GROUP BATTLE
                             </div>
                             <div id="arenaScoreboardGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                                <!-- Dynamic Score Cards -->
+                                <!-- Dynamic Score Cards Generated via JS -->
                             </div>
                         </div>
 
@@ -655,245 +721,336 @@
     </div>
 
     <script>
-        /* DATA SOAL & MISI SOLO (KONSISTEN 7 KASUS BERDASARKAN ALUR BARU) */
+        /* DATA SOAL & MISI SOLO (CASES 1 - 7)
+           Setiap kasus mengikuti alur Polya & Discovery Learning:
+           1. Memahami Informasi Soal (Pernyataan penting)
+           2. Memahami Situasi Masalah (Karakteristik masalah tanpa menyebut istilah KPK/FPB)
+           3. Menentukan Strategi Penyelesaian (KPK vs FPB + Feedback Edukatif/Diagnostik)
+           4. Analisis Kelipatan/Faktor & Hitung Nilai
+           5. Kesimpulan & Interpretasi Makna Dalam Kontek Nyata
+        */
         const caseData = {
             1: {
-                title: "Jadwal Kursus Les Bersama",
+                title: "Jadwal Les Bersama",
                 category: "Kejadian Berulang (KPK)",
-                story: "Budi pergi kursus matematika setiap 3 hari sekali. Siti pergi kursus matematika setiap 4 hari sekali. Pada tanggal 1 Oktober, mereka pergi kursus bersama-sama untuk pertama kalinya. Tanggal berapakah mereka akan kursus bersama-sama lagi berikutnya?",
+                story: "Budi kursus matematika setiap 3 hari sekali. Siti kursus matematika setiap 4 hari sekali. Pada tanggal 1 Oktober, mereka pergi kursus bersama-sama. Tanggal berapakah mereka akan kursus bersama-sama lagi berikutnya?",
                 readStatements: [
                     "Budi les matematika setiap 3 hari sekali.",
                     "Siti les matematika setiap 4 hari sekali.",
                     "Mereka pertama kali les bersama tanggal 1 Oktober.",
-                    "Soal ini menanyakan jumlah total hari dalam satu bulan."
+                    "Soal ini menanyakan tanggal pertemuan ketiga mereka di bulan November."
                 ],
                 correctReadAnswers: [0, 1, 2],
+                
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Apa yang sebenarnya sedang dicari dan terjadi dalam situasi cerita Budi dan Siti di atas?",
                 situationOptions: [
-                    "Dua kegiatan berlangsung secara berulang dengan selang waktu berbeda dan dicari kapan kegiatan tersebut terjadi bersamaan lagi.",
-                    "Sejumlah benda mau dibagi menjadi beberapa kelompok dengan jumlah sama banyak tanpa sisa."
+                    "Dua kegiatan berulang pada rentang hari yang berbeda dan kita ingin tahu kapan jadwal mereka bertemu bersama lagi.",
+                    "Sejumlah siswa yang akan dibagi ke dalam beberapa kelompok les matematika secara adil dan sama banyak.",
+                    "Selisih hari antara Budi dan Siti saat mereka tidak berangkat les."
                 ],
                 correctSituation: 0,
+                situationFeedbackCorrect: "Tepat sekali! Ini adalah situasi jadwal berulang tempat kita mencari waktu/tanggal pertemuan berikutnya.",
+                situationFeedbackWrong: "Perhatikan kembali cerita: Budi les 3 hari sekali dan Siti 4 hari sekali. Apakah ini tentang pembagian kelompok atau pertemuan jadwal yang berulang?",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "kpk",
-                scaffoldingHint: "Petunjuk: Masalah ini melibatkan jadwal yang berulang (3 hari dan 4 hari) dan menanyakan kapan mereka bertemu kembali. Ingat, situasi pertemuan berulang menggunakan strategi Kelipatan Persekutuan Terkecil (KPK)!",
-                factorPrompt: "Mari buktikan dengan menghitung deret kelipatan hari dari Budi dan Siti:",
+                strategyFeedbackCorrect: "Benar. Masalah ini melibatkan beberapa kejadian yang berulang dan kita ingin mengetahui kapan kejadian tersebut terjadi bersamaan lagi. Karena itu, strategi yang tepat adalah mencari Kelipatan Persekutuan Terkecil (KPK).",
+                strategyFeedbackWrong: "Strategi kurang tepat. Mengelompokkan/membagi benda sama banyak menggunakan FPB, sedangkan mencari waktu/kejadian berulang yang bertemu bersama menggunakan KPK. Coba pilih lagi!",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih analisis deret kelipatan hari yang benar untuk membuktikan strategi KPK pilihanmu:",
                 factorStatements: [
-                    "Kelipatan Budi (3) = 3, 6, 9, 12, 15, 18, 21, 24...",
-                    "Kelipatan Siti (4) = 4, 8, 12, 16, 20, 24, 28...",
-                    "Kelipatan persekutuan terkecil (KPK) dari 3 dan 4 adalah 12."
+                    "Kelipatan hari Budi (3) = 3, 6, 9, 12, 15, 18, 21, 24...",
+                    "Kelipatan hari Siti (4) = 4, 8, 12, 16, 20, 24, 28...",
+                    "Kelipatan persekutuan terkecil (KPK) pertama tempat angka mereka bertemu adalah 12."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 12,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
-                    "Mereka akan les bersama lagi 12 hari kemudian, yaitu tanggal 13 Oktober.",
-                    "Mereka akan les bersama lagi pada tanggal 12 Oktober.",
-                    "Mereka akan les bersama lagi pada tanggal 7 Oktober."
+                    "Angka 12 berarti mereka akan les bersama lagi 12 hari setelah tanggal 1 Oktober, yaitu tanggal 13 Oktober.",
+                    "Angka 12 berarti jumlah total anak yang ikut les matematika adalah 12 orang.",
+                    "Angka 12 berarti mereka akan les bersama lagi tepat pada tanggal 12 Oktober."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "KPK = 12 berarti mereka akan bertemu lagi 12 hari setelah tanggal 1 Oktober. Jadi: 1 + 12 = 13 Oktober!"
+                correctConclusion: 0
             },
             2: {
                 title: "Paket Sembako Berbagi",
-                category: "Pembagian Sama Banyak (FPB)",
+                category: "Pembagian Kelompok (FPB)",
                 story: "Ibu memiliki 24 mie instan dan 36 beras kemasan. Ibu ingin membagikan bahan makanan tersebut ke dalam beberapa kantong plastik secara merata tanpa sisa. Berapa jumlah kantong plastik terbanyak yang bisa dibuat Ibu?",
                 readStatements: [
                     "Ibu memiliki 24 mie instan dan 36 beras kemasan.",
-                    "Bahan makanan dibagikan secara merata tanpa ada sisa.",
-                    "Yang dicari adalah jumlah kantong terbanyak yang bisa dibuat.",
-                    "Ibu membeli sembako setiap 12 hari sekali."
+                    "Bahan makanan dibagikan secara merata ke dalam kantong tanpa ada sisa.",
+                    "Pertanyaan soal adalah mencari jumlah kantong plastik terbanyak yang dapat dibuat.",
+                    "Setiap kantong plastik harus diisi mie instan saja tanpa beras."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Situasi mana yang paling menggambarkan masalah yang dialami Ibu?",
                 situationOptions: [
-                    "Dua kegiatan berlangsung berulang dan mencari kapan kegiatan terjadi bersama lagi.",
-                    "Sejumlah benda/objek akan dibagi menjadi beberapa kelompok/kantong yang sama banyak dan dicari jumlah kelompok terbanyak."
+                    "Bahan makanan akan dibagikan berulang-ulang setiap 24 hari dan 36 hari sekali.",
+                    "Terdapat dua jenis benda yang akan dibagi menjadi kelompok/kantong yang sama banyak dan dicari jumlah kelompok terbanyak.",
+                    "Membandingkan selisih harga antara mie instan dan beras kemasan."
                 ],
                 correctSituation: 1,
+                situationFeedbackCorrect: "Sempurna! Kamu memahami bahwa situasi ini adalah tentang membagi beberapa objek ke dalam kelompok sama banyak.",
+                situationFeedbackWrong: "Mari cermati lagi: Ibu punya mie dan beras yang ingin dimasukkan ke beberapa kantong plastik secara merata. Ini bukan masalah jadwal berulang!",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "fpb",
-                scaffoldingHint: "Petunjuk: Masalah ini meminta kita membagikan 24 mie dan 36 beras menjadi kelompok yang sama banyak tanpa sisa. Situasi membagi barang menjadi kelompok terbanyak menggunakan Faktor Persekutuan Terbesar (FPB)!",
-                factorPrompt: "Mari buktikan dengan menentukan faktor pembagi dari 24 dan 36:",
+                strategyFeedbackCorrect: "Benar. Masalah ini meminta kita membagi beberapa benda menjadi kelompok yang sama banyak dan mencari jumlah kelompok terbanyak. Karena itu, strategi yang tepat adalah mencari FPB.",
+                strategyFeedbackWrong: "Strategi belum sesuai. Mencari jadwal bersama menggunakan KPK, sedangkan membagi objek ke dalam bagian/kantong terbanyak menggunakan FPB. Yuk perbaiki pilihanmu!",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih analisis faktor pembagi yang tepat untuk membuktikan strategi FPB pilihanmu:",
                 factorStatements: [
-                    "Faktor dari 24 = 1, 2, 3, 4, 6, 8, 12, 24",
-                    "Faktor dari 36 = 1, 2, 3, 4, 6, 9, 12, 18, 36",
-                    "Faktor persekutuan terbesar (FPB) dari 24 dan 36 adalah 12."
+                    "Faktor pembagi dari 24 = 1, 2, 3, 4, 6, 8, 12, 24",
+                    "Faktor pembagi dari 36 = 1, 2, 3, 4, 6, 9, 12, 18, 36",
+                    "Faktor persekutuan terbesar (FPB) yang membagi habis kedua angka adalah 12."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 12,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
-                    "Angka 12 menunjukkan bahwa jumlah kantong plastik terbanyak yang dapat dibuat Ibu adalah 12 kantong.",
-                    "Angka 12 menunjukkan bahwa setiap kantong berisi 12 mie instan.",
-                    "Angka 12 menunjukkan bahwa Ibu membagikan barang selama 12 hari."
+                    "Angka 12 berarti Ibu membutuhkan waktu 12 hari untuk membagikan seluruh sembako.",
+                    "Angka 12 berarti jumlah kantong plastik terbanyak yang bisa dibuat Ibu dengan isi sama rata adalah 12 kantong.",
+                    "Angka 12 berarti setiap kantong plastik akan berisi 12 mie instan dan 12 beras."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "FPB = 12 berarti 12 adalah pembagi terbesar yang menghasilkan jumlah kantong terbanyak sama isi!"
+                correctConclusion: 1
             },
             3: {
-                title: "Lampu Hias Taman Kota",
+                title: "Lampu Hias Taman",
                 category: "Kejadian Berulang (KPK)",
                 story: "Di taman kota, lampu merah menyala setiap 6 detik sekali, sedangkan lampu hijau menyala setiap 8 detik sekali. Jika kedua lampu menyala bersamaan pada pukul 19.00, pada detik ke berapa kedua lampu akan menyala bersamaan lagi?",
                 readStatements: [
-                    "Lampu merah menyala setiap 6 detik sekali.",
-                    "Lampu hijau menyala setiap 8 detik sekali.",
+                    "Lampu merah menyala setiap pola 6 detik sekali.",
+                    "Lampu hijau menyala setiap pola 8 detik sekali.",
                     "Kedua lampu menyala bersamaan pertama kali pada pukul 19.00.",
-                    "Lampu taman akan dimatikan pada pukul 20.00."
+                    "Soal menanyakan jumlah total daya listrik lampu hias taman."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Apa yang sebenarnya dicari dalam masalah lampu hias ini?",
                 situationOptions: [
-                    "Dua kejadian interval waktu berbeda yang terjadi berulang dan dicari waktu pertemuan bersama berikutnya.",
-                    "Sejumlah barang yang mau dikelompokkan ke dalam beberapa wadah sama banyak."
+                    "Membagi waktu 19 jam menjadi 6 dan 8 bagian yang sama besar.",
+                    "Mencari titik waktu di mana dua kejadian berulang yang beda interval akan terjadi bersama-sama lagi.",
+                    "Menghitung berapa kali lampu merah dan hijau mati total sepanjang malam."
                 ],
-                correctSituation: 0,
+                correctSituation: 1,
+                situationFeedbackCorrect: "Hebat! Kamu mengenali bahwa lampu menyala berulang kali dan kita mencari momen keduanya menyala bersamaan.",
+                situationFeedbackWrong: "Ingat, lampu merah berkedip tiap 6 detik dan hijau tiap 8 detik. Apakah kita sedang membagi barang atau mencari titik temu ritme berulang?",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "kpk",
-                scaffoldingHint: "Petunjuk: Lampu merah (6s) dan hijau (8s) menyala secara berulang-ulang. Kita mencari detik ketika keduanya menyala bersamaan lagi. Gunakan strategi KPK!",
-                factorPrompt: "Mari buktikan dengan menghitung kelipatan waktu detik lampu menyala:",
+                strategyFeedbackCorrect: "Benar. Masalah ini melibatkan beberapa kejadian yang berulang (pola detik) dan kita ingin mengetahui kapan kejadian tersebut terjadi bersamaan lagi. Karena itu, strategi yang tepat adalah mencari KPK.",
+                strategyFeedbackWrong: "Kurang pas! Pembagian objek merata menggunakan FPB. Namun untuk ritme/waktu berulang yang bertemu kembali, kita gunakan KPK.",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih analisis deret kelipatan detik yang tepat untuk pembuktian KPK:",
                 factorStatements: [
                     "Kelipatan detik Lampu Merah (6) = 6, 12, 18, 24, 30, 36...",
                     "Kelipatan detik Lampu Hijau (8) = 8, 16, 24, 32, 40...",
-                    "Kelipatan persekutuan terkecil (KPK) dari 6 dan 8 adalah 24."
+                    "Kelipatan persekutuan terkecil (KPK) pertama di mana detik mereka sama adalah 24."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 24,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
-                    "Angka 24 berarti kedua lampu akan menyala bersamaan lagi pada detik ke-24 (pukul 19.00:24).",
-                    "Angka 24 berarti ada 24 lampu yang dipasang di taman kota.",
-                    "Angka 24 berarti lampu menyala sebanyak 24 kali dalam satu jam."
+                    "Angka 24 berarti kedua lampu menyala bersamaan lagi pada detik ke-24 setelah pukul 19.00 (yaitu pukul 19.00:24).",
+                    "Angka 24 berarti lampu merah telah menyala sebanyak 24 kali.",
+                    "Angka 24 berarti ada 24 buah lampu hias yang terpasang di taman."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "KPK = 24 berarti selang waktu kedua lampu bertemu menyala bersama adalah setiap 24 detik sekali!"
+                correctConclusion: 0
             },
             4: {
-                title: "Bingkisan Ulang Tahun Rani",
-                category: "Pembagian Sama Banyak (FPB)",
+                title: "Bingkisan Ulang Tahun",
+                category: "Pembagian Kelompok (FPB)",
                 story: "Rani menyiapkan 30 cokelat dan 45 permen untuk bingkisan ulang tahunnya. Setiap bingkisan berisi cokelat dan permen dengan jumlah yang sama banyak. Berapa bingkisan terbanyak yang dapat dibuat Rani?",
                 readStatements: [
                     "Rani memiliki 30 cokelat dan 45 permen.",
-                    "Setiap bingkisan berisi jumlah cokelat dan permen yang sama banyak.",
-                    "Yang dicari adalah jumlah bingkisan terbanyak yang dapat dibuat.",
-                    "Rani mengundang 100 orang teman sekolahnya."
+                    "Setiap bingkisan berisi jumlah cokelat dan permen yang sama banyak tanpa sisa.",
+                    "Misi ini mencari jumlah bingkisan (kantong) terbanyak yang dapat dibuat.",
+                    "Rani membagikan bingkisan setiap 30 hari sekali."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Apa jenis situasi masalah yang dihadapi Rani?",
                 situationOptions: [
-                    "Dua jenis makanan ingin dibagi habis ke dalam beberapa bingkisan sama banyak tanpa sisa.",
-                    "Dua anak membeli bingkisan secara rutin setiap beberapa hari sekali."
+                    "Membagi sejumlah objek makanan menjadi beberapa paket bingkisan sama banyak tanpa sisa.",
+                    "Menghitung jadwal Rani membeli cokelat dan permen di toko secara berulang.",
+                    "Menghitung sisa permen jika Rani memakan 5 permen setiap hari."
                 ],
                 correctSituation: 0,
+                situationFeedbackCorrect: "Cerdas! Situasi ini membagi makanan ke dalam banyak bingkisan dengan jumlah rata.",
+                situationFeedbackWrong: "Ayo perhatikan: Rani tidak membeli barang berulang kali, tetapi membagi 30 cokelat & 45 permen ke dalam bingkisan!",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "fpb",
-                scaffoldingHint: "Petunjuk: Rani mau membagi 30 cokelat dan 45 permen ke sebanyak mungkin bingkisan. Karena tujuannya membagi objek menjadi bagian sama banyak, gunakan FPB!",
-                factorPrompt: "Mari buktikan dengan menghitung faktor pembagi dari 30 dan 45:",
+                strategyFeedbackCorrect: "Benar. Masalah ini meminta kita membagi beberapa benda (makanan) menjadi kelompok/bingkisan yang sama banyak dan mencari jumlah kelompok terbanyak. Karena itu, strategi yang tepat adalah mencari FPB.",
+                strategyFeedbackWrong: "Pilihan belum tepat. KPK digunakan untuk kelipatan/waktu berulang. FPB digunakan untuk membagikan objek menjadi bagian-bagian terbanyak.",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih faktor pembagi yang tepat untuk membuktikan FPB dari 30 dan 45:",
                 factorStatements: [
-                    "Faktor dari 30 = 1, 2, 3, 5, 6, 10, 15, 30",
-                    "Faktor dari 45 = 1, 3, 5, 9, 15, 45",
-                    "Faktor persekutuan terbesar (FPB) dari 30 dan 45 adalah 15."
+                    "Faktor pembagi dari 30 = 1, 2, 3, 5, 6, 10, 15, 30",
+                    "Faktor pembagi dari 45 = 1, 3, 5, 9, 15, 45",
+                    "Faktor persekutuan terbesar (FPB) yang sama dari 30 dan 45 adalah 15."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 15,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
                     "Angka 15 berarti jumlah bingkisan terbanyak yang dapat dibuat Rani adalah 15 bingkisan.",
-                    "Angka 15 berarti setiap bingkisan berisi 15 cokelat.",
-                    "Angka 15 berarti Rani membagikan bingkisan kepada 15 anak."
+                    "Angka 15 berarti setiap bingkisan berisi 15 cokelat dan 15 permen.",
+                    "Angka 15 berarti acara ulang tahun Rani dilaksanakan tanggal 15."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "FPB = 15 menunjukkan jumlah bingkisan maksimal yang dapat diisi cokelat dan permen secara adil tanpa sisa!"
+                correctConclusion: 0
             },
             5: {
-                title: "Jadwal Menanam Pohon Lingkungan",
+                title: "Jadwal Menanam Pohon",
                 category: "Kejadian Berulang (KPK)",
                 story: "Klub Hijau menanam pohon setiap 10 hari sekali. Klub Asri menanam pohon setiap 15 hari sekali. Jika hari ini tanggal 5 Mei mereka menanam pohon bersama-sama, tanggal berapakah mereka akan menanam bersama lagi berikutnya?",
                 readStatements: [
-                    "Klub Hijau menanam pohon setiap 10 hari sekali.",
-                    "Klub Asri menanam pohon setiap 15 hari sekali.",
+                    "Klub Hijau menanam pohon setiap interval 10 hari sekali.",
+                    "Klub Asri menanam pohon setiap interval 15 hari sekali.",
                     "Hari pertama menanam bersama adalah tanggal 5 Mei.",
-                    "Kedua klub menanam jenis pohon yang sama persis."
+                    "Klub Asri menanam 15 jenis pohon yang berbeda."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Situasi matematika apakah yang terjadi dalam kegiatan penanaman pohon ini?",
                 situationOptions: [
-                    "Dua kegiatan berulang dengan interval hari berbeda dan dicari waktu pertemuan bersama di masa depan.",
-                    "Bibit pohon mau dibagi ke beberapa lahan taman secara merata."
+                    "Dua kelompok dengan siklus kegiatan berulang dan kita mencari kapan siklus tersebut bertepatan kembali.",
+                    "Membagi luas lahan tanah menjadi 10 dan 15 kaveling yang sama besar.",
+                    "Menghitung jumlah bibit pohon yang mati setelah 10 hari."
                 ],
                 correctSituation: 0,
+                situationFeedbackCorrect: "Benar sekali! Masalah ini adalah tentang dua siklus hari yang akan bertepatan kembali di masa depan.",
+                situationFeedbackWrong: "Mari perhatikan siklusnya: Klub Hijau tiap 10 hari, Klub Asri tiap 15 hari. Ini adalah masalah jadwal berulang!",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "kpk",
-                scaffoldingHint: "Petunjuk: Kegiatan menanam berulang setiap 10 hari dan 15 hari. Kita mencari hari berikutnya mereka menanam bersama. Strategi yang tepat adalah KPK!",
-                factorPrompt: "Mari buktikan dengan menghitung kelipatan interval hari menanam:",
+                strategyFeedbackCorrect: "Benar. Masalah ini melibatkan beberapa kejadian yang berulang (siklus hari) dan kita ingin mengetahui kapan kejadian tersebut terjadi bersamaan lagi. Karena itu, strategi yang tepat adalah mencari KPK.",
+                strategyFeedbackWrong: "Strategi belum tepat. FPB untuk membagi benda/lahan menjadi kelompok terbanyak. Untuk menentukan tanggal siklus pertemuan berikutnya, gunakan KPK!",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih analisis deret kelipatan hari yang benar untuk membuktikan nilai KPK:",
                 factorStatements: [
-                    "Kelipatan Klub Hijau (10) = 10, 20, 30, 40, 50...",
-                    "Kelipatan Klub Asri (15) = 15, 30, 45, 60...",
-                    "Kelipatan persekutuan terkecil (KPK) dari 10 dan 15 adalah 30."
+                    "Kelipatan hari Klub Hijau (10) = 10, 20, 30, 40, 50...",
+                    "Kelipatan hari Klub Asri (15) = 15, 30, 45, 60...",
+                    "Kelipatan persekutuan terkecil (KPK) pertama dari 10 dan 15 adalah 30."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 30,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
-                    "Angka 30 berarti mereka akan menanam bersama lagi 30 hari kemudian, yaitu tanggal 4 Juni (30 hari setelah 5 Mei).",
-                    "Angka 30 berarti mereka menanam bersama lagi tanggal 30 Mei.",
-                    "Angka 30 berarti total pohon yang ditanam adalah 30 pohon."
+                    "Angka 30 berarti mereka akan menanam bersama lagi 30 hari setelah 5 Mei, yaitu pada tanggal 4 Juni (Mei memilik 31 hari).",
+                    "Angka 30 berarti total pohon yang ditanam kedua klub adalah 30 pohon.",
+                    "Angka 30 berarti mereka menanam pohon bersama lagi pada tanggal 30 Mei."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "KPK = 30 berarti mereka bertemu 30 hari lagi. Dari 5 Mei + 30 hari = 4 Juni!"
+                correctConclusion: 0
             },
             6: {
-                title: "Patroli Kentongan Pos Kamling",
+                title: "Patroli Pos Kamling",
                 category: "Kejadian Berulang (KPK)",
                 story: "Ronda A memukul kentongan setiap 12 menit. Ronda B memukul kentongan setiap 18 menit. Jika mereka memukul kentongan bersamaan pada pukul 09.00, pukul berapakah mereka memukul kentongan bersamaan lagi berikutnya?",
                 readStatements: [
-                    "Ronda A memukul kentongan setiap 12 menit.",
-                    "Ronda B memukul kentongan setiap 18 menit.",
+                    "Ronda A memukul kentongan rutin setiap 12 menit.",
+                    "Ronda B memukul kentongan rutin setiap 18 menit.",
                     "Waktu awal kentongan dipukul bersama adalah pukul 09.00.",
-                    "Pos kamling dijaga oleh 30 orang warga."
+                    "Ronda A dan Ronda B memukul kentongan secara acak tanpa jadwal."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Bagaimana kamu mendeskripsikan situasi masalah patroli ini?",
                 situationOptions: [
-                    "Dua pola waktu bunyi kentongan secara berulang dan dicari jam berapa bunyi kentongan bersamaan lagi.",
-                    "Sejumlah kentongan kayu mau dibagikan sama banyak ke beberapa pos."
+                    "Membagi jam giliran ronda 12 dan 18 ke dalam kelompok masyarakat sama banyak.",
+                    "Dua aktivitas berulang dengan selang waktu tertentu dan dicari selang waktu saat keduanya berbunyi serentak lagi.",
+                    "Menghitung selisih suara kentongan antara Ronda A dan Ronda B."
                 ],
-                correctSituation: 0,
+                correctSituation: 1,
+                situationFeedbackCorrect: "Tepat! Ini tentang mencari keselarasan waktu dari dua interval kentongan yang berulang.",
+                situationFeedbackWrong: "Cermati lagi: Ronda A mukul tiap 12 menit, Ronda B tiap 18 menit. Ini ritme interval berulang!",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "kpk",
-                scaffoldingHint: "Petunjuk: Kentongan dipukul setiap interval 12 menit dan 18 menit. Untuk mengetahui kapan bunyi bersamaan lagi, gunakan strategi KPK!",
-                factorPrompt: "Mari buktikan dengan menghitung deret kelipatan menit kedua ronda:",
+                strategyFeedbackCorrect: "Benar. Masalah ini melibatkan beberapa kejadian yang berulang (interval menit) dan kita ingin mengetahui kapan kejadian tersebut terjadi bersamaan lagi. Karena itu, strategi yang tepat adalah mencari KPK.",
+                strategyFeedbackWrong: "Masih kurang tepat! Ingat, membagi barang = FPB, sedangkan menentukan waktu bersamaan kembali dari interval berulang = KPK.",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih analisis deret kelipatan menit yang tepat untuk membuktikan KPK dari 12 dan 18:",
                 factorStatements: [
-                    "Kelipatan Ronda A (12) = 12, 24, 36, 48, 60...",
-                    "Kelipatan Ronda B (18) = 18, 36, 54, 72...",
-                    "Kelipatan persekutuan terkecil (KPK) dari 12 dan 18 adalah 36."
+                    "Kelipatan menit Ronda A (12) = 12, 24, 36, 48...",
+                    "Kelipatan menit Ronda B (18) = 18, 36, 54, 72...",
+                    "Kelipatan persekutuan terkecil (KPK) pertama tempat menit mereka bertemu adalah 36."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 36,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
-                    "Angka 36 berarti mereka akan memukul kentongan bersama lagi 36 menit kemudian, yaitu pukul 09.36.",
-                    "Angka 36 berarti mereka memukul kentongan bersama lagi pukul 10.36.",
-                    "Angka 36 berarti kentongan dipukul sebanyak 36 kali."
+                    "Angka 36 berarti mereka memukul kentongan bersama lagi 36 menit setelah pukul 09.00, yaitu pada pukul 09.36.",
+                    "Angka 36 berarti kentongan telah dipukul sebanyak 36 kali oleh warga.",
+                    "Angka 36 berarti mereka memukul kentongan lagi pada pukul 10.36."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "KPK = 36 berarti interval waktu pertemuan bunyi berikutnya adalah 36 menit. 09.00 + 36 menit = 09.36!"
+                correctConclusion: 0
             },
             7: {
-                title: "Pembagian Buah Panen Pak Tani",
-                category: "Pembagian Sama Banyak (FPB)",
+                title: "Pembagian Buah Panen",
+                category: "Pembagian Kelompok (FPB)",
                 story: "Pak Tani memanen 40 buah apel dan 60 buah jeruk. Pak Tani ingin memasukkan buah-buah tersebut ke dalam beberapa keranjang dengan jumlah apel dan jeruk yang sama di setiap keranjang. Berapa keranjang terbanyak yang dibutuhkan Pak Tani?",
                 readStatements: [
                     "Pak Tani memanen 40 buah apel dan 60 buah jeruk.",
-                    "Buah dimasukkan ke keranjang dengan jumlah sama banyak di setiap keranjang.",
-                    "Misi ini mencari jumlah keranjang terbanyak yang dibutuhkan.",
-                    "Pak Tani menjual seluruh buah ke pasar kota."
+                    "Buah-buah tersebut dimasukkan ke keranjang dengan isi apel dan jeruk sama banyak tanpa sisa.",
+                    "Pertanyaan utama adalah mencari jumlah keranjang terbanyak yang dibutuhkan.",
+                    "Pak Tani menjual apel dan jeruk setiap 40 hari sekali."
                 ],
                 correctReadAnswers: [0, 1, 2],
+
+                // LANGKAH 2: Memahami Situasi Masalah
+                situationPrompt: "Karakteristik masalah mana yang paling pas dengan kegiatan Pak Tani?",
                 situationOptions: [
-                    "Dua jenis buah hasil panen hendak dibagi merata ke dalam sejumlah keranjang terbanyak tanpa sisa.",
-                    "Pak Tani memanen buah apel dan jeruk berkala setiap beberapa hari sekali."
+                    "Terdapat dua kelompok objek (apel dan jeruk) yang akan dibagi rata ke dalam wadah dan dicari jumlah wadah terbanyak.",
+                    "Menghitung siklus panen apel setiap 40 hari dan jeruk setiap 60 hari untuk panen raya bersama.",
+                    "Menghitung berapa banyak buah yang busuk selama perjalanan ke pasar."
                 ],
                 correctSituation: 0,
+                situationFeedbackCorrect: "Hebat! Kamu paham bahwa ini adalah kasus pengelompokan/pembagian barang sama banyak.",
+                situationFeedbackWrong: "Perhatikan lagi cerita: Pak Tani membagi hasil panen apel & jeruk ke keranjang-keranjang. Ini bukan tentang siklus waktu panen berulang!",
+
+                // LANGKAH 3: Menentukan Strategi
                 correctStrategy: "fpb",
-                scaffoldingHint: "Petunjuk: Soal ini meminta membagi 40 apel dan 60 jeruk ke dalam keranjang secara adil/sama banyak. Karena ini pembagian kelompok terbanyak, gunakan FPB!",
-                factorPrompt: "Mari buktikan dengan menghitung faktor pembagi dari 40 dan 60:",
+                strategyFeedbackCorrect: "Benar. Masalah ini meminta kita membagi beberapa benda (buah) menjadi kelompok/keranjang yang sama banyak dan mencari jumlah kelompok terbanyak. Karena itu, strategi yang tepat adalah mencari FPB.",
+                strategyFeedbackWrong: "Pilihan belum pas. Mencari waktu bersama = KPK. Membagi benda menjadi wadah/keranjang terbanyak sama rata = FPB. Coba ganti pilihanmu!",
+
+                // LANGKAH 4: Analisis & Hitung
+                factorPrompt: "Pilih faktor pembagi yang tepat untuk membuktikan FPB dari 40 dan 60:",
                 factorStatements: [
-                    "Faktor dari 40 = 1, 2, 4, 5, 8, 10, 20, 40",
-                    "Faktor dari 60 = 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60",
-                    "Faktor persekutuan terbesar (FPB) dari 40 dan 60 adalah 20."
+                    "Faktor pembagi dari 40 = 1, 2, 4, 5, 8, 10, 20, 40",
+                    "Faktor pembagi dari 60 = 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60",
+                    "Faktor persekutuan terbesar (FPB) yang membagi habis 40 dan 60 adalah 20."
                 ],
                 correctFactorAnswers: [0, 1, 2],
                 correctCalc: 20,
+
+                // LANGKAH 5: Kesimpulan & Interpretasi
                 conclusionOptions: [
                     "Angka 20 berarti jumlah keranjang terbanyak yang dibutuhkan Pak Tani adalah 20 keranjang.",
-                    "Angka 20 berarti setiap keranjang berisi 20 buah apel.",
-                    "Angka 20 berarti Pak Tani membutuhkan waktu 20 hari untuk memanen."
+                    "Angka 20 berarti setiap keranjang berisi 20 buah apel dan 20 buah jeruk.",
+                    "Angka 20 berarti Pak Tani membagikan buah kepada 20 pedagang di pasar."
                 ],
-                correctConclusion: 0,
-                conclusionExplanation: "FPB = 20 menunjukkan bahwa 20 keranjang adalah pembagi maksimal yang membagi habis apel dan jeruk secara merata!"
+                correctConclusion: 0
             }
         };
 
@@ -904,14 +1061,14 @@
                 q: "Berapakah Kelipatan Persekutuan Terkecil (KPK) dari angka 4 dan 6?",
                 options: ["A. 12", "B. 24", "C. 18", "D. 8"],
                 correctIndex: 0,
-                explanation: "Kelipatan 4 = 4, 8, 12... | Kelipatan 6 = 6, 12... | Kelipatan persekutuan terkecil pertama adalah 12."
+                explanation: "Kelipatan 4 = 4, 8, 12, 16... | Kelipatan 6 = 6, 12, 18... | Kelipatan persekutuan terkecil pertama adalah 12."
             },
             {
                 category: "Konsep Dasar FPB",
                 q: "Berapakah Faktor Persekutuan Terbesar (FPB) dari angka 12 dan 18?",
                 options: ["A. 3", "B. 6", "C. 9", "D. 12"],
                 correctIndex: 1,
-                explanation: "Faktor 12 = 1, 2, 3, 4, 6, 12 | Faktor 18 = 1, 2, 3, 6, 9, 18 | FPB adalah 6."
+                explanation: "Faktor 12 = 1, 2, 3, 4, 6, 12 | Faktor 18 = 1, 2, 3, 6, 9, 18 | Faktor persekutuan terbesar adalah 6."
             },
             {
                 category: "Soal Cerita KPK",
@@ -976,11 +1133,12 @@
         let studentProfile = { name: "Pejuang Matematika", class: "5 SD", stars: 0 };
         let caseScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
 
+        /* SEQUENTIAL STEP LOCKING SYSTEM (5 TAHAP ALUR BARU) */
         let caseProgressState = {
             readChecked: false,
             situationChecked: false,
             strategyChecked: false,
-            factorCalcChecked: false,
+            factorChecked: false,
             conclusionChecked: false
         };
 
@@ -1026,7 +1184,11 @@
 
         function triggerConfetti() {
             try {
-                confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
             } catch(e) {}
         }
 
@@ -1060,20 +1222,85 @@
             }
         }
 
+        /* UPDATE VISUAL ALUR DAN KONTROL SEQUENTIAL LOCK */
+        function updateStepSequentialLock() {
+            // STEP 1 IS ALWAYS UNLOCKED
+            enableStepUI(1, true);
+
+            // STEP 2 (Unlocks after Step 1 is done)
+            enableStepUI(2, caseProgressState.readChecked);
+
+            // STEP 3 (Unlocks after Step 2 is done)
+            enableStepUI(3, caseProgressState.situationChecked);
+
+            // STEP 4 (Unlocks after Step 3 is done)
+            enableStepUI(4, caseProgressState.strategyChecked);
+
+            // STEP 5 (Unlocks after Step 4 is done)
+            enableStepUI(5, caseProgressState.factorChecked);
+
+            // BANNER KESIMPULAN
+            if (caseProgressState.conclusionChecked) {
+                document.getElementById('missionCompleteBanner').classList.remove('hidden');
+            } else {
+                document.getElementById('missionCompleteBanner').classList.add('hidden');
+            }
+        }
+
+        function enableStepUI(stepNum, isUnlocked) {
+            const container = document.getElementById(`stepContainer-${stepNum}`);
+            const badge = document.getElementById(`stepBadge-${stepNum}`);
+            const indicator = document.getElementById(`stepIndicator-${stepNum}`);
+
+            if (isUnlocked) {
+                container.classList.remove('step-card-disabled', 'border-slate-200');
+                container.classList.add('border-emerald-400');
+
+                // Determine badge text
+                let isStepDone = false;
+                if (stepNum === 1 && caseProgressState.readChecked) isStepDone = true;
+                if (stepNum === 2 && caseProgressState.situationChecked) isStepDone = true;
+                if (stepNum === 3 && caseProgressState.strategyChecked) isStepDone = true;
+                if (stepNum === 4 && caseProgressState.factorChecked) isStepDone = true;
+                if (stepNum === 5 && caseProgressState.conclusionChecked) isStepDone = true;
+
+                if (isStepDone) {
+                    badge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800";
+                    badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Selesai';
+
+                    indicator.className = "p-2 rounded-xl bg-emerald-600 text-white shadow-md transition-all flex flex-col items-center justify-center gap-1";
+                } else {
+                    badge.className = "text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-800";
+                    badge.innerHTML = 'Sedang Dikerjakan';
+
+                    indicator.className = "p-2 rounded-xl bg-amber-500 text-slate-900 font-bold shadow-md transition-all flex flex-col items-center justify-center gap-1";
+                }
+            } else {
+                container.classList.add('step-card-disabled', 'border-slate-200');
+                container.classList.remove('border-emerald-400');
+
+                badge.className = "text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500";
+                badge.innerHTML = '<i class="fa-solid fa-lock"></i> Terkunci';
+
+                indicator.className = "p-2 rounded-xl bg-slate-700 text-slate-400 transition-all flex flex-col items-center justify-center gap-1";
+            }
+        }
+
         function resetProgressState() {
             caseProgressState = {
                 readChecked: false,
                 situationChecked: false,
                 strategyChecked: false,
-                factorCalcChecked: false,
+                factorChecked: false,
                 conclusionChecked: false
             };
             document.getElementById('readFeedback').innerText = '';
             document.getElementById('situationFeedback').innerText = '';
             document.getElementById('strategyFeedback').innerText = '';
-            document.getElementById('calcFeedback').innerText = '';
+            document.getElementById('factorFeedback').innerText = '';
             document.getElementById('conclusionFeedback').innerText = '';
             document.getElementById('calcInput').value = '';
+            updateStepSequentialLock();
         }
 
         function loadCase(caseNum) {
@@ -1094,11 +1321,10 @@
             document.getElementById('caseCategory').innerText = data.category;
             document.getElementById('caseTitle').innerText = data.title;
             document.getElementById('storyContent').innerText = data.story;
-            document.getElementById('factorStepPrompt').innerText = data.factorPrompt;
 
             document.getElementById('userProgressDisplay').innerText = `Case ${caseNum}/7`;
 
-            // LANGKAH 1
+            // 1. Memahami Informasi Soal
             const readBox = document.getElementById('readStatements');
             readBox.innerHTML = '';
             data.readStatements.forEach((stmt, idx) => {
@@ -1110,22 +1336,24 @@
                 `;
             });
 
-            // LANGKAH 2
+            // 2. Memahami Situasi Masalah
+            document.getElementById('situationPrompt').innerText = data.situationPrompt;
             const sitBox = document.getElementById('situationOptions');
             sitBox.innerHTML = '';
             data.situationOptions.forEach((opt, idx) => {
                 sitBox.innerHTML += `
-                    <label class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 transition-colors">
-                        <input type="radio" name="situationOption" value="${idx}" class="w-5 h-5 text-emerald-600 focus:ring-emerald-500">
-                        <span class="text-xs font-semibold text-slate-700">${opt}</span>
+                    <label class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-cyan-50 transition-colors">
+                        <input type="radio" name="situationOption" value="${idx}" class="w-5 h-5 text-cyan-600 focus:ring-cyan-500">
+                        <span class="text-xs font-bold text-slate-700">${opt}</span>
                     </label>
                 `;
             });
 
-            // LANGKAH 3
+            // 3. Menentukan Strategi
             document.querySelectorAll('input[name="strategyOption"]').forEach(r => r.checked = false);
 
-            // LANGKAH 4
+            // 4. Analisis & Hitung
+            document.getElementById('factorStepPrompt').innerText = data.factorPrompt;
             const factorBox = document.getElementById('factorStatements');
             factorBox.innerHTML = '';
             data.factorStatements.forEach((stmt, idx) => {
@@ -1137,7 +1365,7 @@
                 `;
             });
 
-            // LANGKAH 5
+            // 5. Kesimpulan & Interpretasi
             const concBox = document.getElementById('conclusionOptions');
             concBox.innerHTML = '';
             data.conclusionOptions.forEach((opt, idx) => {
@@ -1150,13 +1378,7 @@
             });
         }
 
-        function addStars(num) {
-            studentProfile.stars += num;
-            caseScores[currentCase] = (caseScores[currentCase] || 0) + num;
-            document.getElementById('userStarsDisplay').innerText = studentProfile.stars;
-        }
-
-        /* CHECK HANDLERS UNTUK ALUR 5 LANGKAH REVISI */
+        // TAHAP 1
         function checkReadAnswer() {
             const data = caseData[currentCase];
             const checked = Array.from(document.querySelectorAll('input[name="readCheck"]:checked')).map(el => parseInt(el.value));
@@ -1167,17 +1389,19 @@
 
             if (isCorrect) {
                 feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex items-center gap-1";
-                feedback.innerHTML = '<i class="fa-solid fa-circle-check text-sm"></i> Tepat sekali! Kamu berhasil mengidentifikasi fakta penting dalam soal (+20 Star).';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check text-sm"></i> Hebat! Kamu mengidentifikasi informasi penting dengan tepat (+20 Star). Langkah 2 Terbuka!';
                 if (!caseProgressState.readChecked) {
                     addStars(20);
                     caseProgressState.readChecked = true;
+                    updateStepSequentialLock();
                 }
             } else {
                 feedback.className = "mt-3 text-xs font-bold text-rose-500 flex items-center gap-1";
-                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-sm"></i> Ada informasi yang belum sesuai. Coba baca ulang cerita soal dengan teliti!';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-sm"></i> Ada pilihan fakta yang kurang pas atau terlewat. Coba baca kembali cerita!';
             }
         }
 
+        // TAHAP 2: Memahami Situasi Masalah
         function checkSituationAnswer() {
             const data = caseData[currentCase];
             const selected = document.querySelector('input[name="situationOption"]:checked');
@@ -1191,17 +1415,19 @@
 
             if (parseInt(selected.value) === data.correctSituation) {
                 feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex items-center gap-1";
-                feedback.innerHTML = '<i class="fa-solid fa-circle-check text-sm"></i> Luar biasa! Kamu memahami jenis masalah yang sedang dihadapi (+20 Star).';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> ${data.situationFeedbackCorrect} (+20 Star). Langkah 3 Terbuka!`;
                 if (!caseProgressState.situationChecked) {
                     addStars(20);
                     caseProgressState.situationChecked = true;
+                    updateStepSequentialLock();
                 }
             } else {
                 feedback.className = "mt-3 text-xs font-bold text-rose-500 flex items-center gap-1";
-                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-sm"></i> Kurang tepat. Pikirkan lagi: apakah ini mengenai jadwal berulang atau pembagian kelompok sama banyak?';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-sm"></i> ${data.situationFeedbackWrong}`;
             }
         }
 
+        // TAHAP 3: Menentukan Strategi
         function checkStrategyAnswer() {
             const data = caseData[currentCase];
             const selected = document.querySelector('input[name="strategyOption"]:checked');
@@ -1209,50 +1435,53 @@
 
             if (!selected) {
                 feedback.className = "mt-3 text-xs font-bold text-amber-600";
-                feedback.innerText = "Pilih strategi KPK atau FPB terlebih dahulu!";
+                feedback.innerText = "Pilih salah satu strategi penyelesaian (KPK atau FPB)!";
                 return;
             }
 
             if (selected.value === data.correctStrategy) {
                 feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex items-center gap-1";
-                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> Benar! ${data.correctStrategy === 'kpk' ? 'Masalah ini melibatkan beberapa kejadian yang berulang dan kita ingin tahu kapan terjadi bersamaan lagi. Karena itu, strateginya adalah KPK.' : 'Masalah ini meminta kita membagi beberapa benda menjadi kelompok yang sama banyak. Karena itu, strateginya adalah FPB.'} (+20 Star).`;
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> ${data.strategyFeedbackCorrect} (+20 Star). Langkah 4 Terbuka!`;
                 if (!caseProgressState.strategyChecked) {
                     addStars(20);
                     caseProgressState.strategyChecked = true;
+                    updateStepSequentialLock();
                 }
             } else {
-                feedback.className = "mt-3 text-xs font-bold text-rose-500 flex flex-col gap-1";
-                feedback.innerHTML = `<span><i class="fa-solid fa-circle-xmark text-sm"></i> Strategi belum tepat.</span><span class="text-slate-600 font-normal">${data.scaffoldingHint}</span>`;
+                feedback.className = "mt-3 text-xs font-bold text-rose-500 flex items-center gap-1";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-sm"></i> ${data.strategyFeedbackWrong}`;
             }
         }
 
+        // TAHAP 4: Analisis & Perhitungan
         function checkFactorAndCalcAnswer() {
             const data = caseData[currentCase];
             const checked = Array.from(document.querySelectorAll('input[name="factorCheck"]:checked')).map(el => parseInt(el.value));
-            const userCalc = parseInt(document.getElementById('calcInput').value);
-            const feedback = document.getElementById('calcFeedback');
+            const inputVal = parseInt(document.getElementById('calcInput').value);
+            const feedback = document.getElementById('factorFeedback');
 
             const isFactorCorrect = checked.length === data.correctFactorAnswers.length && 
                                     checked.every(v => data.correctFactorAnswers.includes(v));
-            const isCalcCorrect = userCalc === data.correctCalc;
+            const isCalcCorrect = (!isNaN(inputVal) && inputVal === data.correctCalc);
 
             if (isFactorCorrect && isCalcCorrect) {
                 feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex items-center gap-1";
-                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> Pembuktian & Perhitungan Sempurna! Hasil ${data.correctStrategy.toUpperCase()} adalah ${data.correctCalc} (+20 Star).`;
-                if (!caseProgressState.factorCalcChecked) {
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check text-sm"></i> Luar biasa! Analisis deret angka dan hasil perhitunganmu sempurna (+20 Star). Langkah 5 Terbuka!';
+                if (!caseProgressState.factorChecked) {
                     addStars(20);
-                    caseProgressState.factorCalcChecked = true;
+                    caseProgressState.factorChecked = true;
+                    updateStepSequentialLock();
                 }
             } else {
-                let errText = [];
-                if (!isFactorCorrect) errText.push("Pernyataan deret angka/faktor belum dicentang dengan benar.");
-                if (!isCalcCorrect) errText.push("Hasil angka perhitungan belum tepat.");
-                
                 feedback.className = "mt-3 text-xs font-bold text-rose-500 flex items-center gap-1";
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-sm"></i> ${errText.join(" ")}`;
+                let errText = "Ada yang perlu diperbaiki: ";
+                if (!isFactorCorrect) errText += "[Deret angka/faktor belum lengkap] ";
+                if (!isCalcCorrect) errText += "[Hasil angka perhitungan akhir belum tepat] ";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-sm"></i> ${errText}`;
             }
         }
 
+        // TAHAP 5: Kesimpulan & Interpretasi Makna
         function checkConclusionAnswer() {
             const data = caseData[currentCase];
             const selected = document.querySelector('input[name="conclusionOption"]:checked');
@@ -1260,331 +1489,412 @@
 
             if (!selected) {
                 feedback.className = "mt-3 text-xs font-bold text-amber-600";
-                feedback.innerText = "Pilih salah satu kesimpulan makna terlebih dahulu!";
+                feedback.innerText = "Pilih salah satu kalimat interpretasi!";
                 return;
             }
 
             if (parseInt(selected.value) === data.correctConclusion) {
-                feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex flex-col gap-1";
-                feedback.innerHTML = `
-                    <span><i class="fa-solid fa-circle-check text-sm"></i> SELAMAT! Interpretasi Jawabanmu Sangat Tepat (+20 Star)!</span>
-                    <span class="text-slate-600 font-normal border-l-2 border-emerald-500 pl-2 mt-1">${data.conclusionExplanation}</span>
-                `;
+                feedback.className = "mt-3 text-xs font-bold text-emerald-600 flex items-center gap-1";
+                feedback.innerHTML = '<i class="fa-solid fa-trophy text-sm"></i> KESIMPULAN & ARTI SANGAT TEPAT! Misi Case Ini Berhasil Diselesaikan! 🎉 (+20 Star)';
                 if (!caseProgressState.conclusionChecked) {
                     addStars(20);
                     caseProgressState.conclusionChecked = true;
+                    caseScores[currentCase] = 100;
+                    updateStepSequentialLock();
                     triggerConfetti();
                 }
             } else {
                 feedback.className = "mt-3 text-xs font-bold text-rose-500 flex items-center gap-1";
-                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-sm"></i> Kesimpulan belum tepat. Ingat untuk menghubungkan angka hasil perhitungan kembali dengan cerita nyata!';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-sm"></i> Arti angka belum pas. Perhatikan apa yang dinyatakan oleh angka tersebut dalam cerita nyata!';
             }
+        }
+
+        function nextCaseMission() {
+            if (currentCase < 7) {
+                loadCase(currentCase + 1);
+            } else {
+                alert("Luar biasa! Seluruh Case 1 hingga 7 telah kamu selesaikan secara sempurna!");
+                switchTab('summary');
+            }
+        }
+
+        function addStars(num) {
+            studentProfile.stars += num;
+            document.getElementById('userStarsDisplay').innerText = studentProfile.stars;
         }
 
         /* STRATEGY LAB FUNCTIONS */
-        function selectLabMethod(methodKey) {
-            currentLabMethod = methodKey;
-            document.querySelectorAll('.lab-method-btn').forEach(btn => btn.classList.remove('method-tab-active'));
-            document.querySelectorAll('.lab-view-content').forEach(view => view.classList.add('hidden'));
+        function getFactors(n) {
+            let factors = [];
+            for (let i = 1; i <= n; i++) {
+                if (n % i === 0) factors.push(i);
+            }
+            return factors;
+        }
 
-            const btn = document.getElementById(`labMethodBtn-${methodKey}`);
-            if (btn) btn.classList.add('method-tab-active');
+        function getMultiples(n, count = 10) {
+            let mults = [];
+            for (let i = 1; i <= count; i++) {
+                mults.push(n * i);
+            }
+            return mults;
+        }
 
-            const view = document.getElementById(`labView-${methodKey}`);
-            if (view) view.classList.remove('hidden');
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function lcm(a, b) {
+            return (a * b) / gcd(a, b);
+        }
+
+        function getPrimeFactors(n) {
+            let factors = [];
+            let divisor = 2;
+            let temp = n;
+            while (temp >= 2) {
+                if (temp % divisor === 0) {
+                    factors.push(divisor);
+                    temp = temp / divisor;
+                } else {
+                    divisor++;
+                }
+            }
+            return factors;
+        }
+
+        function getPrimeFactorCounts(n) {
+            const arr = getPrimeFactors(n);
+            const counts = {};
+            arr.forEach(x => { counts[x] = (counts[x] || 0) + 1; });
+            return counts;
+        }
+
+        function formatFactorizationString(counts) {
+            return Object.keys(counts).map(p => {
+                return counts[p] > 1 ? `${p}<sup>${counts[p]}</sup>` : `${p}`;
+            }).join(' × ');
+        }
+
+        function selectLabMethod(method) {
+            currentLabMethod = method;
+            document.querySelectorAll('.lab-method-btn').forEach(b => b.classList.remove('method-tab-active'));
+            document.querySelectorAll('.lab-view-content').forEach(v => v.classList.add('hidden'));
+
+            document.getElementById(`labMethodBtn-${method}`).classList.add('method-tab-active');
+            document.getElementById(`labView-${method}`).classList.remove('hidden');
         }
 
         function runLab() {
-            const valA = parseInt(document.getElementById('labA').value) || 12;
-            const valB = parseInt(document.getElementById('labB').value) || 18;
+            const a = parseInt(document.getElementById('labA').value) || 1;
+            const b = parseInt(document.getElementById('labB').value) || 1;
 
             document.getElementById('labResults').classList.remove('hidden');
 
-            // METHOD 1: CARA MENDAFTAR
-            const multA = Array.from({length: 8}, (_, i) => valA * (i + 1));
-            const multB = Array.from({length: 8}, (_, i) => valB * (i + 1));
-            const commonMult = multA.filter(x => multB.includes(x));
-            const kpkVal = commonMult[0] || (valA * valB);
+            renderMethodDaftar(a, b);
+            renderMethodPohon(a, b);
+            renderMethodTabel(a, b);
+        }
+
+        function renderMethodDaftar(a, b) {
+            const multA = getMultiples(a, 12);
+            const multB = getMultiples(b, 12);
+            const commonMult = multA.filter(v => multB.includes(v));
+            const kpkVal = lcm(a, b);
+
+            const multAHTML = multA.map(v => commonMult.includes(v) ? `<span class="bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded font-black">${v}</span>` : v).join(', ');
+            const multBHTML = multB.map(v => commonMult.includes(v) ? `<span class="bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded font-black">${v}</span>` : v).join(', ');
 
             document.getElementById('daftarKPKDetails').innerHTML = `
-                <p>• Kelipatan ${valA} = ${multA.join(', ')}...</p>
-                <p>• Kelipatan ${valB} = ${multB.join(', ')}...</p>
-                <p class="text-emerald-700 font-black">➡ Kelipatan Persekutuan Terkecil (KPK) = ${kpkVal}</p>
+                <p>• Kelipatan ${a} = ${multAHTML}...</p>
+                <p>• Kelipatan ${b} = ${multBHTML}...</p>
+                <p class="text-emerald-900 font-bold mt-2">➡ Kelipatan Persekutuan Terkecil (KPK) = <span class="text-lg text-emerald-600 font-black">${kpkVal}</span></p>
             `;
 
-            const getFactors = num => {
-                let facts = [];
-                for (let i = 1; i <= num; i++) {
-                    if (num % i === 0) facts.push(i);
-                }
-                return facts;
-            };
+            const factA = getFactors(a);
+            const factB = getFactors(b);
+            const commonFact = factA.filter(v => factB.includes(v));
+            const fpbVal = gcd(a, b);
 
-            const factA = getFactors(valA);
-            const factB = getFactors(valB);
-            const commonFact = factA.filter(x => factB.includes(x));
-            const fpbVal = Math.max(...commonFact);
+            const factAHTML = factA.map(v => commonFact.includes(v) ? `<span class="bg-cyan-200 text-cyan-900 px-1.5 py-0.5 rounded font-black">${v}</span>` : v).join(', ');
+            const factBHTML = factB.map(v => commonFact.includes(v) ? `<span class="bg-cyan-200 text-cyan-900 px-1.5 py-0.5 rounded font-black">${v}</span>` : v).join(', ');
 
             document.getElementById('daftarFPBDetails').innerHTML = `
-                <p>• Faktor dari ${valA} = ${factA.join(', ')}</p>
-                <p>• Faktor dari ${valB} = ${factB.join(', ')}</p>
-                <p class="text-cyan-700 font-black">➡ Faktor Persekutuan Terbesar (FPB) = ${fpbVal}</p>
+                <p>• Faktor pembagi ${a} = ${factAHTML}</p>
+                <p>• Faktor pembagi ${b} = ${factBHTML}</p>
+                <p class="text-cyan-900 font-bold mt-2">➡ Faktor Persekutuan Terbesar (FPB) = <span class="text-lg text-cyan-600 font-black">${fpbVal}</span></p>
             `;
+        }
 
-            // METHOD 2: POHON FAKTOR
-            document.getElementById('treeNumA').innerText = valA;
-            document.getElementById('treeNumB').innerText = valB;
+        function renderMethodPohon(a, b) {
+            document.getElementById('treeNumA').innerText = a;
+            document.getElementById('treeNumB').innerText = b;
 
-            const getPrimeFactors = num => {
-                let factors = [];
-                let d = 2;
-                while (num >= 2) {
-                    while (num % d === 0) {
-                        factors.push(d);
-                        num /= d;
-                    }
-                    d++;
-                }
-                return factors;
-            };
+            document.getElementById('treeContainerA').innerHTML = generateTreeHTML(a);
+            document.getElementById('treeContainerB').innerHTML = generateTreeHTML(b);
 
-            const primesA = getPrimeFactors(valA);
-            const primesB = getPrimeFactors(valB);
+            const countA = getPrimeFactorCounts(a);
+            const countB = getPrimeFactorCounts(b);
 
-            document.getElementById('treeContainerA').innerHTML = `<div class="p-3 bg-amber-100 text-amber-900 rounded-xl font-bold">Faktorisasi: ${primesA.join(' × ')}</div>`;
-            document.getElementById('treeContainerB').innerHTML = `<div class="p-3 bg-amber-100 text-amber-900 rounded-xl font-bold">Faktorisasi: ${primesB.join(' × ')}</div>`;
+            document.getElementById('primeFactA').innerHTML = `Faktorisasi Prima ${a} = <b>${formatFactorizationString(countA)}</b>`;
+            document.getElementById('primeFactB').innerHTML = `Faktorisasi Prima ${b} = <b>${formatFactorizationString(countB)}</b>`;
 
-            document.getElementById('primeFactA').innerText = `${valA} = ${primesA.join(' × ')}`;
-            document.getElementById('primeFactB').innerText = `${valB} = ${primesB.join(' × ')}`;
+            const kpkVal = lcm(a, b);
+            const fpbVal = gcd(a, b);
 
-            document.getElementById('pohonKPKResult').innerText = `KPK = ${kpkVal}`;
-            document.getElementById('pohonFPBResult').innerText = `FPB = ${fpbVal}`;
+            document.getElementById('pohonKPKResult').innerText = `Nilai KPK = ${kpkVal}`;
+            document.getElementById('pohonFPBResult').innerText = `Nilai FPB = ${fpbVal}`;
+        }
 
-            // METHOD 3: TABEL SENGKEDAN
-            document.getElementById('thNumA').innerText = valA;
-            document.getElementById('thNumB').innerText = valB;
+        function generateTreeHTML(n) {
+            const primes = getPrimeFactors(n);
+            if (primes.length <= 1) {
+                return `<div class="p-2 bg-emerald-100 text-emerald-800 rounded-lg font-bold border border-emerald-300">${n} (Bil. Prima)</div>`;
+            }
+            let html = `<div class="flex flex-col items-center gap-1"><div class="w-10 h-10 rounded-full bg-slate-800 text-white font-bold flex items-center justify-center text-xs shadow">${n}</div><div class="text-xs text-slate-400">/ \\</div><div class="flex gap-4">`;
+            let temp = n;
+            let div = primes[0];
+            let rem = temp / div;
+            html += `<div class="w-8 h-8 rounded-full bg-amber-400 text-slate-900 font-bold flex items-center justify-center text-xs shadow">${div}</div>`;
+            html += `<div class="w-8 h-8 rounded-full bg-cyan-500 text-white font-bold flex items-center justify-center text-xs shadow">${rem}</div>`;
+            html += `</div></div>`;
+            return html;
+        }
 
-            let numA = valA, numB = valB;
-            let rows = [];
-            let currPrime = 2;
+        function renderMethodTabel(a, b) {
+            document.getElementById('thNumA').innerText = a;
+            document.getElementById('thNumB').innerText = b;
 
-            while (numA > 1 || numB > 1) {
-                if (numA % currPrime === 0 || numB % currPrime === 0) {
-                    let divA = numA % currPrime === 0;
-                    let divB = numB % currPrime === 0;
-                    let isBoth = divA && divB;
+            let curA = a;
+            let curB = b;
+            let divisor = 2;
+            let tbody = document.getElementById('sengkedanTableBody');
+            tbody.innerHTML = '';
 
-                    let nextA = divA ? numA / currPrime : numA;
-                    let nextB = divB ? numB / currPrime : numB;
+            let allDivisors = [];
+            let commonDivisors = [];
 
-                    rows.push({
-                        prime: currPrime,
-                        aAfter: nextA,
-                        bAfter: nextB,
-                        isBoth: isBoth
-                    });
+            while (curA > 1 || curB > 1) {
+                if (curA % divisor === 0 || curB % divisor === 0) {
+                    const dividesA = curA % divisor === 0;
+                    const dividesB = curB % divisor === 0;
 
-                    numA = nextA;
-                    numB = nextB;
+                    let nextA = dividesA ? curA / divisor : curA;
+                    let nextB = dividesB ? curB / divisor : curB;
+
+                    let isCommon = dividesA && dividesB;
+
+                    allDivisors.push(divisor);
+                    if (isCommon) commonDivisors.push(divisor);
+
+                    tbody.innerHTML += `
+                        <tr class="${isCommon ? 'bg-amber-50' : ''}">
+                            <td class="p-2.5 border border-slate-200 font-black ${isCommon ? 'text-amber-600' : 'text-slate-700'}">${divisor} ${isCommon ? '⭐' : ''}</td>
+                            <td class="p-2.5 border border-slate-200">${nextA}</td>
+                            <td class="p-2.5 border border-slate-200">${nextB}</td>
+                            <td class="p-2.5 border border-slate-200 text-[11px]">${isCommon ? '<span class="text-amber-700 font-bold">Membagi Kedua Angka (FPB)</span>' : 'Membagi Salah Satu'}</td>
+                        </tr>
+                    `;
+
+                    curA = nextA;
+                    curB = nextB;
                 } else {
-                    currPrime++;
+                    divisor++;
                 }
             }
 
-            const tbody = document.getElementById('sengkedanTableBody');
-            tbody.innerHTML = '';
-            rows.forEach(r => {
-                tbody.innerHTML += `
-                    <tr class="${r.isBoth ? 'bg-amber-100/80 font-black text-amber-900' : ''}">
-                        <td class="p-2 border border-slate-300 font-bold ${r.isBoth ? 'text-amber-800' : 'text-slate-600'}">${r.prime} ${r.isBoth ? '⭐ (Bagi Dua-duanya)' : ''}</td>
-                        <td class="p-2 border border-slate-300">${r.aAfter}</td>
-                        <td class="p-2 border border-slate-300">${r.bAfter}</td>
-                        <td class="p-2 border border-slate-300 text-xs">${r.isBoth ? 'Faktor Bersama (FPB)' : 'Pembagi KPK'}</td>
-                    </tr>
-                `;
-            });
+            const kpkVal = lcm(a, b);
+            const fpbVal = gcd(a, b);
 
-            document.getElementById('tabelKPKResult').innerText = `KPK = ${kpkVal}`;
-            document.getElementById('tabelFPBResult').innerText = `FPB = ${fpbVal}`;
+            document.getElementById('tabelKPKResult').innerHTML = `${allDivisors.join(' × ')} = <b>${kpkVal}</b>`;
+            document.getElementById('tabelFPBResult').innerHTML = `${commonDivisors.length > 0 ? commonDivisors.join(' × ') : '1'} = <b>${fpbVal}</b>`;
         }
 
-        /* GROUP BATTLE ROYALE FUNCTIONS */
+        /* ALL-GROUP BATTLE ROYALE GAME FUNCTIONS */
         function startAllGroupBattle() {
-            const g1 = document.getElementById('groupInput1').value.trim() || 'Kelompok 1';
-            const g2 = document.getElementById('groupInput2').value.trim() || 'Kelompok 2';
-            const g3 = document.getElementById('groupInput3').value.trim() || 'Kelompok 3';
-            const g4 = document.getElementById('groupInput4').value.trim() || 'Kelompok 4';
+            const g1 = document.getElementById('groupInput1').value.trim() || "Kelompok 1";
+            const g2 = document.getElementById('groupInput2').value.trim() || "Kelompok 2";
+            const g3 = document.getElementById('groupInput3').value.trim() || "Kelompok 3";
+            const g4 = document.getElementById('groupInput4').value.trim() || "Kelompok 4";
             const g5 = document.getElementById('groupInput5').value.trim();
 
-            const names = [g1, g2, g3, g4];
-            if (g5) names.push(g5);
+            battleGroups = [
+                { id: 1, name: g1, score: 0 },
+                { id: 2, name: g2, score: 0 },
+                { id: 3, name: g3, score: 0 },
+                { id: 4, name: g4, score: 0 }
+            ];
 
-            battleGroups = names.map((name, idx) => ({
-                name: name,
-                score: 0,
-                theme: groupColorThemes[idx % groupColorThemes.length]
-            }));
+            if (g5) {
+                battleGroups.push({ id: 5, name: g5, score: 0 });
+            }
 
             document.getElementById('duelSetupScreen').classList.add('hidden');
             document.getElementById('duelArenaScreen').classList.remove('hidden');
 
             currentBattleQIdx = 0;
-            renderArenaScoreboard();
-            loadArenaQuestion(0);
+            renderBattleQuestion();
+            renderScoreboardGrid();
         }
 
-        function renderArenaScoreboard() {
+        function renderScoreboardGrid() {
             const grid = document.getElementById('arenaScoreboardGrid');
             grid.innerHTML = '';
-            battleGroups.forEach(g => {
+
+            battleGroups.forEach((g, idx) => {
+                const theme = groupColorThemes[idx % groupColorThemes.length];
                 grid.innerHTML += `
-                    <div class="p-3 rounded-2xl ${g.theme.bg} border ${g.theme.border} text-center shadow-lg">
-                        <div class="text-[10px] uppercase font-bold text-slate-300 truncate">${g.name}</div>
-                        <div class="text-xl font-black font-fredoka ${g.theme.text} mt-0.5">${g.score} <span class="text-[10px]">pts</span></div>
+                    <div class="${theme.bg} ${theme.border} border-2 rounded-2xl p-3 text-center shadow-lg relative overflow-hidden">
+                        <div class="text-[10px] font-bold text-slate-300 truncate uppercase">${g.name}</div>
+                        <div class="text-2xl font-black font-fredoka ${theme.text} mt-0.5">${g.score} <span class="text-xs">PTS</span></div>
                     </div>
                 `;
             });
         }
 
-        function loadArenaQuestion(idx) {
-            if (idx >= duelBattleQuestions.length) {
-                alert("Pertandingan All-Group Battle Royale telah Selesai!");
-                return;
-            }
-
-            const q = duelBattleQuestions[idx];
-            document.getElementById('qIndexBadge').innerText = `SOAL ${idx + 1} / ${duelBattleQuestions.length}`;
+        function renderBattleQuestion() {
+            const q = duelBattleQuestions[currentBattleQIdx];
+            document.getElementById('qIndexBadge').innerText = `SOAL ${currentBattleQIdx + 1} / ${duelBattleQuestions.length}`;
             document.getElementById('qCategoryBadge').innerText = q.category;
             document.getElementById('arenaQuestionText').innerText = q.q;
 
-            const optsGrid = document.getElementById('arenaOptionsGrid');
-            optsGrid.innerHTML = '';
-            q.options.forEach((opt, oIdx) => {
-                optsGrid.innerHTML += `
-                    <div class="p-3 bg-slate-900/80 border border-slate-700 rounded-xl text-xs font-bold text-slate-200">
+            const optGrid = document.getElementById('arenaOptionsGrid');
+            optGrid.innerHTML = '';
+            q.options.forEach(opt => {
+                optGrid.innerHTML += `
+                    <div class="p-3.5 bg-slate-900/90 border border-slate-700 rounded-2xl text-xs font-bold text-slate-200">
                         ${opt}
                     </div>
                 `;
             });
 
-            document.getElementById('solutionContent').innerText = q.explanation;
             document.getElementById('solutionBox').classList.add('hidden');
-            document.getElementById('btnSolutionText').innerText = 'Buka Kunci Jawaban';
+            document.getElementById('btnSolutionText').innerText = "Buka Kunci Jawaban";
+            document.getElementById('solutionContent').innerText = q.explanation;
 
-            // Group Ticketing
-            const checkGrid = document.getElementById('groupAnswerCheckGrid');
-            checkGrid.innerHTML = '';
-            battleGroups.forEach((g, gIdx) => {
-                checkGrid.innerHTML += `
-                    <label class="p-3 rounded-xl bg-slate-800 border border-slate-700 flex items-center gap-2 cursor-pointer hover:bg-slate-700">
-                        <input type="checkbox" id="checkGroupAnswer_${gIdx}" class="w-4 h-4 text-emerald-500 rounded">
-                        <span class="text-xs font-bold text-white truncate">${g.name} (Benar)</span>
+            renderGroupTicketing();
+            resetTimer();
+        }
+
+        function renderGroupTicketing() {
+            const grid = document.getElementById('groupAnswerCheckGrid');
+            grid.innerHTML = '';
+
+            battleGroups.forEach((g, idx) => {
+                const theme = groupColorThemes[idx % groupColorThemes.length];
+                grid.innerHTML += `
+                    <label class="flex items-center justify-between p-3 bg-slate-800/90 border border-slate-700 rounded-2xl cursor-pointer hover:bg-slate-700 transition-colors">
+                        <span class="text-xs font-bold ${theme.text}">${g.name}</span>
+                        <input type="checkbox" id="chkGroupScore-${g.id}" value="${g.id}" class="w-5 h-5 text-emerald-500 rounded focus:ring-emerald-400">
                     </label>
                 `;
             });
-
-            resetTimer();
         }
 
         function toggleSolutionBox() {
             const box = document.getElementById('solutionBox');
-            const btnText = document.getElementById('btnSolutionText');
+            const txt = document.getElementById('btnSolutionText');
             if (box.classList.contains('hidden')) {
                 box.classList.remove('hidden');
-                btnText.innerText = 'Sembunyikan Kunci';
+                txt.innerText = "Sembunyikan Kunci Jawaban";
             } else {
                 box.classList.add('hidden');
-                btnText.innerText = 'Buka Kunci Jawaban';
+                txt.innerText = "Buka Kunci Jawaban";
             }
-        }
-
-        function setTimerDuration(seconds) {
-            initialTimerSetting = seconds;
-            resetTimer();
-        }
-
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isTimerRunning = false;
-            timerSeconds = initialTimerSetting;
-            updateTimerDisplay();
-            document.getElementById('timerIcon').className = 'fa-solid fa-play';
-        }
-
-        function toggleTimer() {
-            if (isTimerRunning) {
-                clearInterval(timerInterval);
-                isTimerRunning = false;
-                document.getElementById('timerIcon').className = 'fa-solid fa-play';
-            } else {
-                isTimerRunning = true;
-                document.getElementById('timerIcon').className = 'fa-solid fa-pause';
-                timerInterval = setInterval(() => {
-                    if (timerSeconds > 0) {
-                        timerSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        isTimerRunning = false;
-                        alert("Waktu habis!");
-                    }
-                }, 1000);
-            }
-        }
-
-        function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const s = (timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
         }
 
         function submitGroupScores() {
-            battleGroups.forEach((g, gIdx) => {
-                const isChecked = document.getElementById(`checkGroupAnswer_${gIdx}`)?.checked;
-                if (isChecked) {
+            battleGroups.forEach(g => {
+                const chk = document.getElementById(`chkGroupScore-${g.id}`);
+                if (chk && chk.checked) {
                     g.score += 50;
                 }
             });
-            renderArenaScoreboard();
+            renderScoreboardGrid();
             triggerConfetti();
         }
 
         function nextArenaQuestion() {
-            currentBattleQIdx++;
-            if (currentBattleQIdx < duelBattleQuestions.length) {
-                loadArenaQuestion(currentBattleQIdx);
+            if (currentBattleQIdx < duelBattleQuestions.length - 1) {
+                currentBattleQIdx++;
+                renderBattleQuestion();
             } else {
-                alert("Semua Soal Pertandingan telah Selesai!");
+                alert("Pertandingan All-Group Battle Royale Selesai! Selamat untuk pemenang!");
             }
         }
 
-        /* REKAP SUMMARY & CSV EXPORT */
-        function renderSummary() {
-            const container = document.getElementById('summaryContent');
-            container.innerHTML = `
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-4">
-                    <div class="text-sm font-bold text-slate-700">Nama Pejuang: <span class="text-emerald-600">${studentProfile.name}</span></div>
-                    <div class="text-sm font-bold text-slate-700">Kelas: <span class="text-emerald-600">${studentProfile.class}</span></div>
-                    <div class="text-sm font-bold text-slate-700">Total Bintang Misi Solo: <span class="text-amber-500">${studentProfile.stars} ⭐</span></div>
-                </div>
+        /* TIMER CONTROLS */
+        function toggleTimer() {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('timerIcon').className = "fa-solid fa-play";
+            } else {
+                startTimer();
+            }
+        }
 
+        function startTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = true;
+            document.getElementById('timerIcon').className = "fa-solid fa-pause";
+
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    document.getElementById('timerIcon').className = "fa-solid fa-play";
+                    alert("Waktu habis untuk soal ini!");
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = initialTimerSetting;
+            updateTimerDisplay();
+            startTimer();
+        }
+
+        function setTimerDuration(sec) {
+            initialTimerSetting = sec;
+            resetTimer();
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+        }
+
+        /* SUMMARY & CSV */
+        function renderSummary() {
+            const box = document.getElementById('summaryContent');
+            box.innerHTML = `
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 mb-4">
+                    <h3 class="text-lg font-black font-fredoka text-slate-800">Profil Pejuang: ${studentProfile.name} (${studentProfile.class})</h3>
+                    <p class="text-xs font-bold text-amber-600 mt-1"><i class="fa-solid fa-star"></i> Total Bintang Misi Solo: ${studentProfile.stars} Stars</p>
+                </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse bg-white rounded-xl overflow-hidden shadow-sm text-xs md:text-sm">
+                    <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden text-xs md:text-sm">
                         <thead>
                             <tr class="bg-slate-800 text-white font-fredoka">
-                                <th class="p-3">Case</th>
-                                <th class="p-3">Judul Misi</th>
-                                <th class="p-3">Kategori</th>
-                                <th class="p-3">Bintang Diraih</th>
+                                <th class="p-3 border border-slate-700">Misi Case</th>
+                                <th class="p-3 border border-slate-700">Kategori Kasus</th>
+                                <th class="p-3 border border-slate-700">Status Tahap Polya</th>
+                                <th class="p-3 border border-slate-700">Skor Selesai</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 font-bold text-slate-700">
-                            ${Object.keys(caseData).map(key => `
+                            ${Object.keys(caseData).map(k => `
                                 <tr>
-                                    <td class="p-3">Case ${key}</td>
-                                    <td class="p-3">${caseData[key].title}</td>
-                                    <td class="p-3">${caseData[key].category}</td>
-                                    <td class="p-3 text-amber-500">${caseScores[key] || 0} ⭐</td>
+                                    <td class="p-3 border border-slate-200">Case ${k}:${caseData[k].title}</td>
+                                    <td class="p-3 border border-slate-200">${caseData[k].category}</td>
+                                    <td class="p-3 border border-slate-200">${caseScores[k] === 100 ? '<span class="text-emerald-600 font-black">Lengkap 5 Langkah</span>' : '<span class="text-slate-400">Belum Selesai</span>'}</td>
+                                    <td class="p-3 border border-slate-200">${caseScores[k]} / 100</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -1594,17 +1904,22 @@
         }
 
         function exportCSV() {
-            let csv = "Case,Judul Misi,Kategori,Bintang\n";
-            Object.keys(caseData).forEach(key => {
-                csv += `Case ${key},"${caseData[key].title}","${caseData[key].category}",${caseScores[key] || 0}\n`;
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Nama Pejuang,Kelas,Total Bintang\n";
+            csvContent += `"${studentProfile.name}","${studentProfile.class}",${studentProfile.stars}\n\n`;
+            csvContent += "Case ID,Judul Case,Kategori,Skor Akhir\n";
+
+            Object.keys(caseData).forEach(k => {
+                csvContent += `Case ${k},"${caseData[k].title}","${caseData[k].category}",${caseScores[k]}\n`;
             });
 
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', `Laporan_Misi_KPK_FPB_${studentProfile.name}.csv`);
-            a.click();
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Laporan_GROW_MISSION_${studentProfile.name.replace(/\s+/g, '_')}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
